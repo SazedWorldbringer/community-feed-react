@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -35,12 +36,18 @@ function Questions() {
       ) : (
         <div>
           {questions?.map((question) => (
-            <Card
+            <Link
               key={question.question_id}
-              title={question.title}
-              views={question.view_count}
-              answers={question.answer_count}
-            />
+              href={`/questions/${question.question_id}`}
+              passHref
+              style={{ textDecoration: 'none' }}
+            >
+              <Card
+                title={question.title}
+                views={question.view_count}
+                answers={question.answer_count}
+              />
+            </Link>
           ))}
         </div>
       )}
