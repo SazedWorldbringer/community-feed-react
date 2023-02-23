@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ const QuestionsContainer = styled.div`
 function Questions() {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const [hasMore, setHasMore] = useState(false);
 
   const router = useRouter();
   const { page } = router.query;
@@ -25,8 +27,8 @@ function Questions() {
       );
       const result = await data.json();
       if (result) {
-        console.log(result)
         setQuestions(result.items);
+        setHasMore(result.has_more)
         setLoading(false)
       }
     }
@@ -39,22 +41,25 @@ function Questions() {
       {loading ? (
         <span>Loading...</span>
       ) : (
-        <div>
-          {questions?.map((question) => (
-            <Link
-              key={question.question_id}
-              href={`/questions/${question.question_id}`}
-              passHref
-              style={{ textDecoration: 'none' }}
-            >
-              <Card
-                title={question.title}
-                views={question.view_count}
-                answers={question.answer_count}
-              />
-            </Link>
-          ))}
-        </div>
+        <>
+          <div>
+            {questions?.map((question) => (
+              <Link
+                key={question.question_id}
+                href={`/questions/${question.question_id}`}
+                passHref
+                style={{ textDecoration: 'none' }}
+              >
+                <Card
+                  title={question.title}
+                  views={question.view_count}
+                  answers={question.answer_count}
+                />
+              </Link>
+            ))}
+          </div>
+          <Pagination currentPage={parseInt(page) || 1} hasMore={hasMore} />
+        </>
       )}
     </QuestionsContainer>
   )
