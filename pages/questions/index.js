@@ -1,5 +1,6 @@
 import Card from "@/components/Card";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -14,19 +15,23 @@ function Questions() {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
 
+  const router = useRouter();
+  const { page } = router.query;
+
   useEffect(() => {
     async function fetchData() {
       const data = await fetch(
-        'https://api.stackexchange.com/2.2/questions?order=desc&sort=hot&tagged=reactjs&site=stackoverflow',
+        `https://api.stackexchange.com/2.2/questions?${page ? `page=${page}&` : ''}order=desc&sort=hot&tagged=reactjs&site=stackoverflow`,
       );
       const result = await data.json();
       if (result) {
+        console.log(result)
         setQuestions(result.items);
         setLoading(false)
       }
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   return (
     <QuestionsContainer>
