@@ -17,7 +17,7 @@ const CardLink = styled.a`
 function Questions({ questions, hasMore, page }) {
   return (
     <QuestionsContainer>
-      <h2>Qustions</h2>
+      <h2>Questions</h2>
       <div>
         {questions?.map((question) => (
           <Link
