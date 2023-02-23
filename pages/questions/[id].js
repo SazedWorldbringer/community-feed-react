@@ -34,7 +34,7 @@ function QuestionDetail() {
 
   return (
     <QuestionDetailContainer>
-      <h2>Question:{id}</h2>
+      <h2>Question: {id}</h2>
     {loading ? (
       <span>Loading...</span>
     ): (
