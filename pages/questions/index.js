@@ -12,6 +12,10 @@ const QuestionsContainer = styled.div`
   margin: 5%;
 `;
 
+const CardLink = styled.a`
+  text-decoration: none;
+`;
+
 function Questions() {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
@@ -48,13 +52,15 @@ function Questions() {
                 key={question.question_id}
                 href={`/questions/${question.question_id}`}
                 passHref
-                style={{ textDecoration: 'none' }}
+                legacyBehavior
               >
-                <Card
-                  title={question.title}
-                  views={question.view_count}
-                  answers={question.answer_count}
-                />
+                <CardLink>
+                  <Card
+                    title={question.title}
+                    views={question.view_count}
+                    answers={question.answer_count}
+                  />
+                </CardLink>
               </Link>
             ))}
           </div>
