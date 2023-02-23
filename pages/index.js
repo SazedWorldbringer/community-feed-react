@@ -1,5 +1,9 @@
-import Questions from "./questions";
+import Questions, { getServerSideProps as getServerSidePropsQuestions } from "./questions"
 
-export default function Home() {
-  return <Questions />
+export function getServerSideProps(context) {
+  return getServerSidePropsQuestions(context);
+}
+
+export default function Home(props) {
+  return <Questions {...props} />
 }
