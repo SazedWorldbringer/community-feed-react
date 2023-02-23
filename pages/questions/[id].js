@@ -1,4 +1,5 @@
 import Card from '@/components/Card';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -23,7 +24,7 @@ function QuestionDetail() {
         `https://api.stackexchange.com/2.2/questions/${id}?site=stackoverflow`
       );
       const result = await data.json();
-      if(result) {
+      if (result) {
         console.log(result.items[0])
         setQuestion(result.items[0]);
         setLoading(false)
@@ -35,15 +36,20 @@ function QuestionDetail() {
   return (
     <QuestionDetailContainer>
       <h2>Question: {id}</h2>
-    {loading ? (
-      <span>Loading...</span>
-    ): (
-      <Card 
-        title={question.title}
-      views={question.view_count}
-      answers={question.answer_count}
-      />
-    )}
+      {loading ? (
+        <span>Loading...</span>
+      ) : (
+        <>
+          <Head>
+            <title>{question.title} || Community Feed</title>
+          </Head>
+          <Card
+            title={question.title}
+            views={question.view_count}
+            answers={question.answer_count}
+          />
+        </>
+      )}
     </QuestionDetailContainer>
   )
 }
